@@ -1,5 +1,5 @@
-from typing import Dict, List, Type
 from dataclasses import astuple, dataclass
+from typing import Dict, List, Type
 
 
 @dataclass
@@ -24,9 +24,9 @@ class InfoMessage:
 
 class Training:
     """Базовый класс тренировки."""
-    M_IN_KM = 1000
-    LEN_STEP = 0.65
-    H_TO_MIN = 60
+    M_IN_KM: float = 1000
+    LEN_STEP: float = 0.65
+    H_TO_MIN: float = 60
 
     def __init__(self,
                  action: int,
@@ -49,7 +49,7 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        pass
+        raise NotImplementedError
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -62,8 +62,8 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    coeff_calorie_1 = 18
-    coeff_calorie_2 = 20
+    coeff_calorie_1: float = 18
+    coeff_calorie_2: float = 20
 
     def get_spent_calories(self) -> float:
         """Расчет потраченных калорий для тренировки: Бег"""
@@ -77,8 +77,8 @@ class Running(Training):
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
 
-    coeff_calorie_1 = 0.035
-    coeff_calorie_2 = 0.029
+    coeff_calorie_1: float = 0.035
+    coeff_calorie_2: float = 0.029
 
     def __init__(self,
                  action: float,
@@ -99,9 +99,9 @@ class SportsWalking(Training):
 
 class Swimming(Training):
     """Тренировка: плавание."""
-    LEN_STEP = 1.38
-    coeff_calorie_1 = 1.1
-    coeff_calorie_2 = 2
+    LEN_STEP: float = 1.38
+    coeff_calorie_1: float = 1.1
+    coeff_calorie_2: float = 2
 
     def __init__(self,
                  action: int,
@@ -139,8 +139,7 @@ def read_package(workout_type: str, data: List) -> Training:
     }
     if workout_type in workout_dict:
         return workout_dict[workout_type](*data)
-    else:
-        return 'Не указан тип тренировки. Датчик сломался? :('
+    return 'Не указан тип тренировки. Датчик сломался? :('
 
 
 def main(training: Training) -> None:
